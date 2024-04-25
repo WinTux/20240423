@@ -4,6 +4,12 @@ namespace _20240423.Repositorios
 {
     public class ImplEstudianteRepository : IEstudianteRepository
     {
+        private readonly UniversidadDbContext context;
+
+        public ImplEstudianteRepository(UniversidadDbContext context)
+        {
+            this.context = context;
+        }
         public IEnumerable<Estudiante> GetEstudiantes() {
             var estudiantes = new List<Estudiante> { 
                 new Estudiante{ 

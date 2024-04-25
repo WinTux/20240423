@@ -1,3 +1,6 @@
+using _20240423.Repositorios;
+using Microsoft.EntityFrameworkCore;
+
 namespace _20240423
 {
     public class Program
@@ -9,7 +12,8 @@ namespace _20240423
             // Add services to the container.
 
             builder.Services.AddControllers();
-
+            builder.Services.AddScoped<IEstudianteRepository, ImplEstudianteRepository>();
+            builder.Services.AddDbContext<UniversidadDbContext>( op => op.UseSqlServer(builder.Configuration.GetConnectionString("una_conexion")));
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

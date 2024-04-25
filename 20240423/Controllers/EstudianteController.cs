@@ -8,7 +8,13 @@ namespace _20240423.Controllers
     [Route("api/estudiante")] // https://localhost:1234/api/estudiante
     public class EstudianteController : ControllerBase
     {
-        private readonly ImplEstudianteRepository repo = new ImplEstudianteRepository();
+        private readonly IEstudianteRepository repo;
+
+        public EstudianteController(IEstudianteRepository repo)
+        {
+            this.repo = repo;
+        }
+
         [HttpGet] // https://localhost:1234/api/estudiante [GET]
         public ActionResult<IEnumerable<Estudiante>> GetEstudiantes() {
             var ests = repo.GetEstudiantes();
