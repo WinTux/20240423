@@ -14,6 +14,7 @@ namespace _20240423
             builder.Services.AddControllers();
             builder.Services.AddScoped<IEstudianteRepository, ImplEstudianteRepository>();
             builder.Services.AddDbContext<UniversidadDbContext>( op => op.UseSqlServer(builder.Configuration.GetConnectionString("una_conexion")));
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

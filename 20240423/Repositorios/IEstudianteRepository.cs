@@ -6,5 +6,8 @@ namespace _20240423.Repositorios
     {
         IEnumerable<Estudiante> GetEstudiantes();
         Estudiante GetEstudianteById(int idest);
+        void AddEstudiante(Estudiante est);
+
+        bool Guardar();
     }
 }

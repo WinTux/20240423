@@ -11,36 +11,24 @@ namespace _20240423.Repositorios
             this.context = context;
         }
         public IEnumerable<Estudiante> GetEstudiantes() {
-            var estudiantes = new List<Estudiante> { 
-                new Estudiante{ 
-                    Id = 1,
-                    Nombre = "Pepe",
-                    Apellido = "Perales",
-                    Carrera = "Informática"
-                },
-                new Estudiante{
-                    Id = 2,
-                    Nombre = "Samantha",
-                    Apellido = "Rocha",
-                    Carrera = "Ing. Sistemas"
-                },
-                new Estudiante{
-                    Id = 3,
-                    Nombre = "Ana",
-                    Apellido = "Roca",
-                    Carrera = "Fisica"
-                }
-            };
-            return estudiantes;
+
+            return context.estudiantes.ToList();
         }
         public Estudiante GetEstudianteById(int idEstudiante) {
-            return new Estudiante
-            {
-                Id = 1,
-                Nombre = "Samantha",
-                Apellido = "Rocha",
-                Carrera = "Ing. Sistemas"
-            };
+            return context.estudiantes.FirstOrDefault(est => est.Id == idEstudiante); // select * from estudiante where Id = 7 limit 1
+        }
+
+        public void AddEstudiante(Estudiante est)
+        {
+            if (est == null)
+                throw new ArgumentNullException(nameof(est));
+            context.estudiantes.Add(est);
+        }
+
+        public bool Guardar()
+        {
+            return (context.SaveChanges() > -1);
         }
     }
 }
+// TODO: Crear DTO para la creacion de Estudiante
