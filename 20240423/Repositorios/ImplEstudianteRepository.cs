@@ -29,6 +29,10 @@ namespace _20240423.Repositorios
         {
             return (context.SaveChanges() > -1);
         }
+
+        public void UpdateEstudiante(Estudiante est)
+        {
+            // Escalabilidad
+        }
     }
 }
-// TODO: Crear DTO para la creacion de Estudiante

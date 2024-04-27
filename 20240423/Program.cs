@@ -1,5 +1,6 @@
 using _20240423.Repositorios;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Serialization;
 
 namespace _20240423
 {
@@ -11,7 +12,7 @@ namespace _20240423
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers().AddNewtonsoftJson(s => s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
             builder.Services.AddScoped<IEstudianteRepository, ImplEstudianteRepository>();
             builder.Services.AddDbContext<UniversidadDbContext>( op => op.UseSqlServer(builder.Configuration.GetConnectionString("una_conexion")));
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

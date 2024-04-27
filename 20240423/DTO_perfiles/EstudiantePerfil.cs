@@ -8,6 +8,9 @@ namespace _20240423.DTO_perfiles
         public EstudiantePerfil()
         {
             CreateMap<Estudiante,EstudianteReadDTO>(); // --------->
+            CreateMap<EstudianteCreateDTO, Estudiante>();
+            CreateMap<EstudianteUpdateDTO, Estudiante>();
+            CreateMap<Estudiante, EstudianteUpdateDTO > ();
         }
     }
 }
