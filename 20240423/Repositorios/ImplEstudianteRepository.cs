@@ -34,5 +34,12 @@ namespace _20240423.Repositorios
         {
             // Escalabilidad
         }
+
+        public void DeleteEstudiante(Estudiante est)
+        {
+            if(est == null)
+                throw new ArgumentNullException(nameof(est));
+            context.estudiantes.Remove(est);
+        }
     }
 }

@@ -63,5 +63,14 @@ namespace _20240423.Controllers
             repo.Guardar();
             return NoContent();
         }
+        [HttpDelete("{idParaEliminar}")]
+        public ActionResult eliminarEstudiante(int idParaEliminar) {
+            Estudiante estudiante = repo.GetEstudianteById(idParaEliminar);
+            if (estudiante == null)
+                return NotFound();
+            repo.DeleteEstudiante(estudiante);
+            repo.Guardar();
+            return NoContent();
+        }
     }
 }

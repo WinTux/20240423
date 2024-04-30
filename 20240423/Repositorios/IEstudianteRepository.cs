@@ -8,7 +8,7 @@ namespace _20240423.Repositorios
         Estudiante GetEstudianteById(int idest);
         void AddEstudiante(Estudiante est);
         void UpdateEstudiante(Estudiante est);
-
+        void DeleteEstudiante(Estudiante est);
         bool Guardar();
     }
 }
