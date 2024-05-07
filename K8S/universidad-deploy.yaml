@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: universidad-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: universidadservice
+  template:
+    metadata:
+      labels:
+        app: universidadservice
+    spec:
+      containers:
+        - name: universidadservice
+          image: rusok/superproyectofx:1.0.9
+          imagePullPolicy: IfNotPresent

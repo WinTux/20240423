@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>_20240423</RootNamespace>
+    <UserSecretsId>secretito_20240423</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
