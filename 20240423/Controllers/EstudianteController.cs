@@ -1,4 +1,5 @@
-﻿using _20240423.DTO;
+﻿using _20240423.ComunicacionSync.Http;
+using _20240423.DTO;
 using _20240423.Models;
 using _20240423.Repositorios;
 using AutoMapper;
@@ -13,11 +14,13 @@ namespace _20240423.Controllers
     {
         private readonly IEstudianteRepository repo;
         private readonly IMapper mapper;
+        private readonly ICampusHistorialCliente campusHistorialCliente;
 
-        public EstudianteController(IEstudianteRepository repo, IMapper mapper)
+        public EstudianteController(IEstudianteRepository repo, IMapper mapper, ICampusHistorialCliente campusHistorialCliente)
         {
             this.repo = repo;
             this.mapper = mapper;
+            this.campusHistorialCliente = campusHistorialCliente;
         }
 
         [HttpGet] // https://localhost:1234/api/estudiante [GET]
@@ -33,11 +36,18 @@ namespace _20240423.Controllers
             return NotFound();// 404
         }
         [HttpPost] // https://localhost:1234/api/estudiante [POST]
-        public ActionResult<Estudiante> setEstudiante(EstudianteCreateDTO estCreateDTO) {
+        public async Task<ActionResult<EstudianteReadDTO>> setEstudiante(EstudianteCreateDTO estCreateDTO) {
             Estudiante estudiante = mapper.Map<Estudiante>(estCreateDTO);
             repo.AddEstudiante(estudiante);
             repo.Guardar();
             EstudianteReadDTO estRetorno = mapper.Map<EstudianteReadDTO>(estudiante);
+
+            try { 
+                await campusHistorialCliente.ComunicarseConCampus(estRetorno);
+            }catch(Exception e) {
+                Console.WriteLine($"Ocurrio un error al comunicarse con Campus de forma sincronizada: {e.Message}");
+            }
+
             return CreatedAtRoute(nameof(GetEstudianteById), new { idest = estudiante.Id}, estRetorno);
         }
         [HttpPut("{id}")] // https://localhost:1234/api/estudiante/123 [PUT]

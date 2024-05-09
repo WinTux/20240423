@@ -1,3 +1,4 @@
+using _20240423.ComunicacionSync.Http;
 using _20240423.Repositorios;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
@@ -18,6 +19,7 @@ namespace _20240423
             // Add services to the container.
 
             builder.Services.AddControllers().AddNewtonsoftJson(s => s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
+            builder.Services.AddHttpClient<ICampusHistorialCliente, ImplHttpCampusHistorialCliente>();
             builder.Services.AddScoped<IEstudianteRepository, ImplEstudianteRepository>();
             builder.Services.AddDbContext<UniversidadDbContext>( op => op.UseSqlServer($"Server={servidor},{puerto};DataBase={ddbb};User={usuario};Password={password};TrustServerCertificate=True;Encrypt=False"));//builder.Configuration.GetConnectionString("una_conexion")
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
