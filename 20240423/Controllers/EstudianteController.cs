@@ -56,7 +56,7 @@ namespace _20240423.Controllers
             {
                 var estudiantePublisherDTO = mapper.Map<EstudiantePublisherDTO>(estRetorno);
                 estudiantePublisherDTO.tipoEvento = "estudiante_publicado";
-                busDeMensajesCliente.PublicarNuevoEstudiante(estudiantePublisherDTO)
+                busDeMensajesCliente.PublicarNuevoEstudiante(estudiantePublisherDTO);
             }
             catch (Exception e)
             {
