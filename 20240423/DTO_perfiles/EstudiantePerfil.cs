@@ -11,6 +11,7 @@ namespace _20240423.DTO_perfiles
             CreateMap<EstudianteCreateDTO, Estudiante>();
             CreateMap<EstudianteUpdateDTO, Estudiante>();
             CreateMap<Estudiante, EstudianteUpdateDTO > ();
+            CreateMap<EstudianteReadDTO, EstudiantePublisherDTO>();
         }
     }
 }

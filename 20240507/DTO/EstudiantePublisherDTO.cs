@@ -1,0 +1,11 @@
+﻿namespace _20240507.DTO
+{
+    public class EstudiantePublisherDTO
+    {
+        public int Id { get; set; }
+        public string Nombre { get; set; }
+        public string Apellido { get; set; }
+        public DateTime fecha_nac { get; set; }
+        public string tipoEvento { get; set; }
+    }
+}

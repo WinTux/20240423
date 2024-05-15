@@ -1,3 +1,4 @@
+using _20240423.ComunicacionAsync;
 using _20240423.ComunicacionSync.Http;
 using _20240423.Repositorios;
 using Microsoft.EntityFrameworkCore;
@@ -21,9 +22,16 @@ namespace _20240423
             builder.Services.AddControllers().AddNewtonsoftJson(s => s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
             builder.Services.AddHttpClient<ICampusHistorialCliente, ImplHttpCampusHistorialCliente>();
             builder.Services.AddScoped<IEstudianteRepository, ImplEstudianteRepository>();
-            builder.Services.AddDbContext<UniversidadDbContext>( op => op.UseSqlServer($"Server={servidor},{puerto};DataBase={ddbb};User={usuario};Password={password};TrustServerCertificate=True;Encrypt=False"));//builder.Configuration.GetConnectionString("una_conexion")
+            string cadena = $"Server={servidor},{puerto};DataBase={ddbb};User={usuario};Password={password};TrustServerCertificate=True;Encrypt=False";
+            if (!builder.Environment.IsDevelopment())
+                cadena = builder.Configuration.GetConnectionString("UniversidadProd");
+            builder.Services.AddDbContext<UniversidadDbContext>( op => op.UseSqlServer(cadena));//builder.Configuration.GetConnectionString("una_conexion")
+            builder.Services.AddSingleton<IBusDeMensajesCliente,ImplBusDeMensajesCliente>();
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             var app = builder.Build();
+
+            
+
 
             // Configure the HTTP request pipeline.
 

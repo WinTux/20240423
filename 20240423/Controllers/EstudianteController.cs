@@ -1,4 +1,5 @@
-﻿using _20240423.ComunicacionSync.Http;
+﻿using _20240423.ComunicacionAsync;
+using _20240423.ComunicacionSync.Http;
 using _20240423.DTO;
 using _20240423.Models;
 using _20240423.Repositorios;
@@ -15,12 +16,14 @@ namespace _20240423.Controllers
         private readonly IEstudianteRepository repo;
         private readonly IMapper mapper;
         private readonly ICampusHistorialCliente campusHistorialCliente;
+        private readonly IBusDeMensajesCliente busDeMensajesCliente;
 
-        public EstudianteController(IEstudianteRepository repo, IMapper mapper, ICampusHistorialCliente campusHistorialCliente)
+        public EstudianteController(IEstudianteRepository repo, IMapper mapper, ICampusHistorialCliente campusHistorialCliente, IBusDeMensajesCliente busDeMensajesCliente)
         {
             this.repo = repo;
             this.mapper = mapper;
             this.campusHistorialCliente = campusHistorialCliente;
+            this.busDeMensajesCliente = busDeMensajesCliente;
         }
 
         [HttpGet] // https://localhost:1234/api/estudiante [GET]
@@ -46,6 +49,18 @@ namespace _20240423.Controllers
                 await campusHistorialCliente.ComunicarseConCampus(estRetorno);
             }catch(Exception e) {
                 Console.WriteLine($"Ocurrio un error al comunicarse con Campus de forma sincronizada: {e.Message}");
+            }
+
+            // Async
+            try
+            {
+                var estudiantePublisherDTO = mapper.Map<EstudiantePublisherDTO>(estRetorno);
+                estudiantePublisherDTO.tipoEvento = "estudiante_publicado";
+                busDeMensajesCliente.PublicarNuevoEstudiante(estudiantePublisherDTO)
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Ocurrio un error al comunicarse con Campus de forma asincrona: {e.Message}");
             }
 
             return CreatedAtRoute(nameof(GetEstudianteById), new { idest = estudiante.Id}, estRetorno);
